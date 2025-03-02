@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Profile</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-image">
+                <img id="profileImg" src="default-profile.png" alt="Profile Image">
+                <br>
+                <button id="uploadImageBtn">Upload Image</button>
+            </div>
+            <div class="profile-info">
+                <h2 id="profileName">Admin Name</h2>
+                <p id="profileEmail">admin@example.com</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+
+</body>
+</html>
