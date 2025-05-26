@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const tableBody = document.querySelector("#table-container tbody");
 
     // Fetch data from Firestore and update table
-    db.collection("payments").onSnapshot((querySnapshot) => {
+    db.collection("parking_bill").onSnapshot((querySnapshot) => {
         tableBody.innerHTML = ""; // Clear existing table data
 
         querySnapshot.forEach((doc) => {
@@ -28,10 +28,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const row = document.createElement("tr");
             row.innerHTML = `
-                <td>${userData.userName || "N/A"}</td>
-                <td>${userData.amount || "N/A"}</td>
+                <td>${userData.name || "N/A"}</td>
+                <td>${userData.price || "N/A"}</td>
                 <td>${userData.status || "N/A"}</td>
-                <td>${userData.vechicle || "N/A"}</td>
+                <td>${userData.slots|| "N/A"}</td>
+                <td>${userData.totalPrice|| "N/A"}</td>
+                <td>${userData.locationId|| "N/A"}</td>
                 <td>${formattedTimestamp}</td>  <!-- Display the formatted timestamp -->
                 <td>
                     <img src="${userData.imageBill || 'default-image.jpg'}" alt="User Image" class="image-zoom" style="width: 100px; height: 100px; cursor: pointer;">
@@ -75,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".delete-btn").forEach((button) => {
             button.addEventListener("click", (e) => {
                 const userId = e.target.getAttribute("data-id");
-                db.collection("payments").doc(userId).delete()
+                db.collection("parking_bill").doc(userId).delete()
                     .then(() => alert("Payment deleted successfully!"))
                     .catch((error) => console.error("Error deleting payment:", error));
             });

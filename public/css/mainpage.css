@@ -591,97 +591,6 @@ main .btn-send:hover {
 
 
 
-/* userandownner */
-
-.title {
-    color: #333;
-    margin-bottom: 20px;
-	padding: 10px;
-}
-
-.breadcrumbs {
-    list-style: none;
-    padding: 10px;
-    display: flex;
-    gap: 10px;
-    font-size: 14px;
-}
-
-.breadcrumbs li a {
-    text-decoration: none;
-    color: #4CAF50;
-}
-
-.breadcrumbs .divider {
-    color: #666;
-}
-
-.table-container {
-    width: 100%;
-    overflow-x: auto;
-    border-radius: 8px;
-    background: #fff;
-    padding: 15px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-}
-
-thead {
-    background-color: rgb(0, 90, 207);
-    color: white;
-}
-
-thead th {
-    padding: 12px;
-    text-align: left;
-    font-weight: bold;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tbody tr:hover {
-    background-color: #ddd;
-}
-
-td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-}
-/* Buttons */
-button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.update-btn {
-    background-color: blue;
-    color: white;
-    margin-right: 5px;
-}
-
-.delete-btn {
-    background-color: #f44336;
-    color: white;
-}
-
-.update-btn:hover {
-    background-color: var(--dark-blue);
-}
-
-.delete-btn:hover {
-    background-color: #d32f2f;
-}
 
 /* Style for the modal */
 .zoom-modal {
@@ -777,6 +686,36 @@ button {
     background: gray;
     cursor: not-allowed;
 }
+.modal-overlay, .zoom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content, .zoom-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    text-align: center;
+}
+
+.btn-reject {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1024px) {
     #sidebar {
         max-width: 200px;
@@ -1080,7 +1019,6 @@ li {
     width: calc(100% - 260px);
     left: 260px;
     transition: all .3s ease;
-    padding: 20px; /* Add padding for spacing */
     display: flex;
     flex-direction: column;
 }
@@ -1229,3 +1167,136 @@ main .card {
     box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
     margin-bottom: 20px;
 }
+
+
+
+/* userandownner */
+
+
+
+  /* Title */
+  .title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  /* Breadcrumbs */
+  .breadcrumbs {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 5px;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+  
+  .breadcrumbs li a {
+    text-decoration: none;
+    color: #3498db;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumbs li a:hover {
+    color: #2980b9;
+  }
+  
+  .breadcrumbs .divider {
+    color: #95a5a6;
+  }
+  
+  /* Table Container */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+  /* Table Styles */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  
+  thead {
+    background-color: #2980b9;
+    color: #fff;
+  }
+  
+  thead th {
+    padding: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tbody tr:hover {
+    background-color: #e2e2e2;
+  }
+  
+  td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Buttons */
+  button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  .update-btn {
+    background-color: #3498db;
+    color: #fff;
+    margin-right: 5px;
+  }
+  
+  .delete-btn {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+  
+  .update-btn:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+  }
+  
+  .delete-btn:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+  }
+  
+
+
+  /* parking_main */
+  #parkingTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#parkingTable th, #parkingTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+

@@ -39,10 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     <button class="verify-btn" data-id="${bookingId}" ${userData.paymentStatus === "success" ? "disabled" : ""}>
                         ${userData.paymentStatus === "success" ? "Verified" : "Verify"}
                     </button>
+                    <button class="reject-btn" data-id="${bookingId}" ${userData.paymentStatus === "rejected" ? "disabled" : ""}>
+                        ${userData.paymentStatus === "rejected" ? "Rejected" : "Reject"}
+                    </button>
                     <button class="check-payment-btn" data-id="${bookingId}">
                         Check Payment
                     </button>
                 </td>
+
                 <td id="payment-details-${bookingId}" class="payment-details">
                     <!-- Payment details will be shown here -->
                 </td>
@@ -55,6 +59,13 @@ document.addEventListener("DOMContentLoaded", function () {
             button.addEventListener("click", (e) => {
                 const bookingId = e.target.getAttribute("data-id");
                 showVerifyDialog(bookingId);
+            });
+        });
+        // Attach event listener to "Reject" buttons
+        document.querySelectorAll(".reject-btn").forEach((button) => {
+            button.addEventListener("click", (e) => {
+                const bookingId = e.target.getAttribute("data-id");
+                showRejectDialog(bookingId);
             });
         });
 
@@ -82,7 +93,7 @@ function showVerifyDialog(bookingId) {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(modal);
 
     // Click event for confirm button
@@ -129,6 +140,59 @@ function verifyPayment(bookingId) {
     });
 }
 
+function showRejectDialog(bookingId) {
+    const modal = document.createElement("div");
+    modal.innerHTML = `
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <h2>Reject Payment</h2>
+                <p>Are you sure you want to reject payment for Booking ID: <strong>${bookingId}</strong>?</p>
+                <button id="confirmReject" class="btn-reject">Reject</button>
+                <button id="cancelReject" class="btn-cancel">Cancel</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+
+    document.getElementById("confirmReject").addEventListener("click", function () {
+        rejectPayment(bookingId);
+        document.body.removeChild(modal);
+    });
+
+    document.getElementById("cancelReject").addEventListener("click", function () {
+        document.body.removeChild(modal);
+    });
+}
+
+function rejectPayment(bookingId) {
+    const bookingRef = firebase.firestore().collection("bookings").doc(bookingId);
+
+    bookingRef.get().then((bookingDoc) => {
+        if (!bookingDoc.exists) {
+            alert(`No booking found for Booking ID: ${bookingId}`);
+            return;
+        }
+
+        const bookingData = bookingDoc.data();
+        const paymentId = bookingData.paymentId;
+
+        if (!paymentId) {
+            alert(`No payment associated with Booking ID: ${bookingId}`);
+            return;
+        }
+
+        const paymentRef = firebase.firestore().collection("payments").doc(paymentId);
+
+        // Update both booking and payment status
+        bookingRef.update({ paymentStatus: "rejected" })
+            .then(() => paymentRef.update({ status: "rejected" }))
+            .then(() => alert(`Payment Rejected for Booking ID: ${bookingId}`))
+            .catch((error) => console.error("Error rejecting payment:", error));
+    }).catch((error) => {
+        console.error("Error fetching booking:", error);
+    });
+}
 
 // Function to check payment details (like image URL and amount)
 function checkPaymentDetails(bookingId) {

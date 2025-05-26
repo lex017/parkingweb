@@ -11,11 +11,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    const tableBody = document.querySelector("#table-container tbody");
+    const tableBody = document.querySelector("#table-body");
+
+    const updateFormContainer = document.createElement("div");
+    updateFormContainer.id = "update-form";
+    updateFormContainer.style.display = "none";
+    updateFormContainer.style.marginTop = "20px";
+    updateFormContainer.innerHTML = `
+        <h3>Update User</h3>
+        <input type="text" id="update-username" placeholder="New username"><br><br>
+        <input type="email" id="update-email" placeholder="New email"><br><br>
+        <input type="text" id="update-password" placeholder="New password"><br><br>
+        <button id="submit-update">Submit</button>
+        <button id="cancel-update">Cancel</button>
+        <hr>
+    `;
+    document.querySelector("#user-data").appendChild(updateFormContainer);
+
+    const updateUsername = document.getElementById("update-username");
+    const updateEmail = document.getElementById("update-email");
+    const updatePassword = document.getElementById("update-password");
+    const submitUpdate = document.getElementById("submit-update");
+    const cancelUpdate = document.getElementById("cancel-update");
+
+    let selectedUserId = null;
+
+    cancelUpdate.addEventListener("click", () => {
+        document.getElementById("update-form").style.display = "none";
+        selectedUserId = null;
+    });
+
+    submitUpdate.addEventListener("click", () => {
+        if (selectedUserId) {
+            db.collection("users").doc(selectedUserId).update({
+                username: updateUsername.value,
+                email: updateEmail.value,
+                password: updatePassword.value
+            }).then(() => {
+                alert("User updated successfully!");
+                document.getElementById("update-form").style.display = "none";
+                selectedUserId = null;
+            }).catch((error) => {
+                console.error("Error updating user:", error);
+            });
+        }
+    });
 
     // Fetch data from Firestore and update table
     db.collection("users").onSnapshot((querySnapshot) => {
-        tableBody.innerHTML = ""; // Clear existing table data
+        tableBody.innerHTML = "";
 
         querySnapshot.forEach((doc) => {
             const userData = doc.data();
@@ -25,20 +69,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td>${userData.email || "N/A"}</td>
                 <td>${userData.password || "N/A"}</td>
                 <td>
-                    <button class="update-btn" data-id="${doc.id}">Update</button>
+                    <button class="update-btn" data-id="${doc.id}" 
+                        data-username="${userData.username || ""}" 
+                        data-email="${userData.email || ""}" 
+                        data-password="${userData.password || ""}">
+                        Update
+                    </button>
                     <button class="delete-btn" data-id="${doc.id}">Delete</button>
                 </td>
             `;
             tableBody.appendChild(row);
         });
 
-        // Delete user from Firestore
+        // Delete user
         document.querySelectorAll(".delete-btn").forEach((button) => {
             button.addEventListener("click", (e) => {
                 const userId = e.target.getAttribute("data-id");
-                db.collection("users").doc(userId).delete()
-                    .then(() => alert("User deleted successfully!"))
-                    .catch((error) => console.error("Error deleting user:", error));
+                if (confirm("Are you sure you want to delete this user?")) {
+                    db.collection("users").doc(userId).delete()
+                        .then(() => alert("User deleted successfully!"))
+                        .catch((error) => console.error("Error deleting user:", error));
+                }
+            });
+        });
+
+        // Update user
+        document.querySelectorAll(".update-btn").forEach((button) => {
+            button.addEventListener("click", (e) => {
+                selectedUserId = button.getAttribute("data-id");
+                updateUsername.value = button.getAttribute("data-username");
+                updateEmail.value = button.getAttribute("data-email");
+                updatePassword.value = button.getAttribute("data-password");
+                document.getElementById("update-form").style.display = "block";
             });
         });
     });

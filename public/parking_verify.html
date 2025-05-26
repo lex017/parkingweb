@@ -9,7 +9,7 @@
 </head>
 <body>
     
-   <!-- SIDEBAR -->
+    <!-- SIDEBAR -->
 	<section id="sidebar">
 		<a href="mainpage.html" class="brand"><i class='bx bxs-smile icon'></i> Admin_4jord</a>
 		<ul class="side-menu">
@@ -83,32 +83,41 @@
             </div>
         </nav>
 
-        <!-- MAIN -->
         <main id="user-data">
-            <h1 class="title">User Data</h1>
+            <h1 class="title">Parking_verify Data</h1>
             <ul class="breadcrumbs">
                 <li><a href="#">Home</a></li>
                 <li class="divider">/</li>
-                <li><a href="#" class="active">User</a></li>
+                <li><a href="#" class="active">Parking_verify</a></li>
             </ul>
             <div class="tablecontainer" id="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Total_amount</th>
-                            <th>Accound_number</th>
-                            <th>Date</th>
-                            <th>Name</th>
-                            <th>Bill</th>
+                            <th>Name</th>  
+                            <th>Totalprice</th>
+                            <th>Car_slot</th>
+                            <th>status</th>
+                            <th>pagekage</th>
+                            <th>tag</th>
+                            <th>Time</th>
                             <th>Actions</th>
                         </tr>
-                        <tbody id="table-body">
-                            <!-- User data from Firestore will be inserted here -->
-                        </tbody>
                     </thead>
+                    <tbody id="table-body">
+                        <!-- User data from Firestore will be inserted here -->
+                    </tbody>
                 </table>
             </div>
+        
+            <!-- Modal for the zoomed image -->
+            <div id="zoomModal" class="zoom-modal">
+                <span class="close" id="closeZoomModal">&times;</span>
+                <img class="modal-content" id="zoomedImage">
+                <div id="caption"></div>
+            </div>
         </main>
+        
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -117,6 +126,6 @@
     <!-- Firebase -->
     <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="js/user.js"></script>
+    <script src="js/parking_verify.js"></script>
 </body>
 </html>

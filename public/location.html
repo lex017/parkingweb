@@ -13,32 +13,45 @@
 	<section id="sidebar">
 		<a href="mainpage.html" class="brand"><i class='bx bxs-smile icon'></i> Admin_4jord</a>
 		<ul class="side-menu">
-			<li><a href="mainpage.html" class="active"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+			<li><a href="mainpage.html" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
 			<li class="divider" data-text="main">Main</li>
 			<li>
-				<a href="#"><i class='bx bxs-inbox icon' ></i> Parking <i class='bx bx-chevron-right icon-right' ></i></a>
+				<a href="#"><i class='bx bxs-inbox icon'></i> Parking <i class='bx bx-chevron-right icon-right'></i></a>
 				<ul class="side-dropdown">
-					<li><a href="#">Ownner_parking</a></li>
 					<li><a href="location.html">Location</a></li>
 					<li><a href="payment.html">Payment</a></li>
-					<li><a href="#">Button</a></li>
 				</ul>
 			</li>
-			<li><a href="Map_parking.html"><i class='bx bxs-chart icon' ></i> Map_parking</a></li>
-			<li><a href="table_user.html"><i class='bx bxs-widget icon' ></i> User</a></li>
-			<li><a href="table_Ownner.html"><i class='bx bxs-widget icon' ></i> Ownner</a></li>
-			<li><a href="ticket_verify.html"><i class='bx bxs-widget icon' ></i> Ticket_verify</a></li>
-			<li class="divider" data-text="table and forms">Table and forms</li>
-			<li><a href="#"><i class='bx bx-table icon' ></i> Tables</a></li>
 			<li>
-				<a href="#"><i class='bx bxs-notepad icon' ></i> Forms <i class='bx bx-chevron-right icon-right' ></i></a>
+				<a href="#"><i class='bx bxs-inbox icon'></i> Verify <i class='bx bx-chevron-right icon-right'></i></a>
+				<ul class="side-dropdown">
+					<li><a href="ticket_verify.html"><i class='bx bxs-widget icon'></i> Ticket_verify</a></li>
+					<li><a href="parking_verify.html"><i class='bx bxs-widget icon'></i> Parking_verify</a></li>
+					<li><a href="owner_verify.html"><i class='bx bxs-widget icon'></i> Owner_verify</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#"><i class='bx bxs-inbox icon'></i> update <i class='bx bx-chevron-right icon-right'></i></a>
+				<ul class="side-dropdown">
+					<li><a href="renew_parking.html"><i class='bx bxs-widget icon'></i> Parking_renew</a></li>
+					<li><a href="update_parking.html"><i class='bx bxs-widget icon'></i> Parking_slot</a></li>
+				</ul>
+			</li>
+			<li><a href="Map_parking.html"><i class='bx bxs-chart icon'></i> Map_parking</a></li>
+			<li><a href="table_user.html"><i class='bx bxs-widget icon'></i> User</a></li>
+			<li><a href="table_Ownner.html"><i class='bx bxs-widget icon'></i> Ownner</a></li>
+
+			<li class="divider" data-text="table and forms">Table and forms</li>
+			<li><a href="#"><i class='bx bx-table icon'></i> Tables</a></li>
+			<li>
+				<a href="#"><i class='bx bxs-notepad icon'></i> Forms <i class='bx bx-chevron-right icon-right'></i></a>
 				<ul class="side-dropdown">
 					<li><a href="ticket.html">Tickets</a></li>
 					<li><a href="#">Payment_history</a></li>
 				</ul>
 			</li>
 		</ul>
-		
+
 	</section>
 	<!-- SIDEBAR -->
 
@@ -72,31 +85,33 @@
         </nav>
 
         <!-- MAIN -->
-        <main id="user-data">
-            <h1 class="title">Location</h1>
-            <ul class="breadcrumbs">
-                <li><a href="#">Home</a></li>
-                <li class="divider">/</li>
-                <li><a href="#" class="active">Location</a></li>
-            </ul>
+        <main id="parking-data">
+            <h1 class="title">Parking Locations</h1>
             <div class="tablecontainer" id="table-container">
                 <table>
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>address</th>
-                            <th>description</th>
-                            <th>car_slot</th>
-                            <th>url</th>
+                            <th>Address</th>
+                            <th>Description</th>
+                            <th>Car Slot</th>
+                            <th>Image</th>
                             <th>Actions</th>
                         </tr>
-                        <tbody id="table-body">
-                            <!-- User data from Firestore will be inserted here -->
-                        </tbody>
                     </thead>
+                    <tbody>
+                        <!-- Loaded dynamically -->
+                    </tbody>
                 </table>
             </div>
+            <div id="zoomModal" class="modal" style="display:none; position:fixed; z-index:999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.8);">
+                <span id="closeZoomModal" style="position:absolute;top:15px;right:35px;color:#fff;font-size:40px;cursor:pointer;">&times;</span>
+                <img id="zoomedImage" style="margin:auto; display:block; max-width:80%; max-height:80%;">
+                <div id="caption" style="text-align:center; color:white; padding:10px;"></div>
+            </div>
+            
         </main>
+        
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
