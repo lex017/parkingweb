@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const tableBody = document.querySelector("#table-body");
 
     // Fetch data from Firestore and update table
-    db.collection("parking_bill").onSnapshot((querySnapshot) => {
+    db.collection("parking_bill").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
     tableBody.innerHTML = ""; // Clear existing table data
 
     querySnapshot.forEach((doc) => {
@@ -42,10 +42,10 @@ document.addEventListener("DOMContentLoaded", function () {
             <td>${userData.tag || "N/A"}</td>
             <td>${formattedTimestamp}</td>
             <td>
-                 <button class="verify-btn" data-id="${billId}" ${userData.paymentStatus === "update" ? "disabled" : ""}>
+                 <button class="verify-btn" data-id="${billId}" ${userData.status === "update" ? "disabled" : ""}>
                         ${userData.status === "update" ? "Verified" : "Verify"}
                     </button>
-                    <button class="reject-btn" data-id="${billId}" ${userData.paymentStatus === "rejected" ? "disabled" : ""}>
+                    <button class="reject-btn" data-id="${billId}" ${userData.status === "rejected" ? "disabled" : ""}>
                         ${userData.status === "rejected" ? "Rejected" : "Reject"}
                     </button>
                 <button class="check-payment-btn" data-id="${billId}">
@@ -116,9 +116,9 @@ function showVerifyDialog(billId) {
 function verifyPayment(billId) {
     const ownerRef = firebase.firestore().collection("parking_bill").doc(billId);
 
-    ownerRef.update({ verify: "update" })
+    ownerRef.update({ status: "update" })
         .then(() => {
-            alert(`Verification successful for Owner ID: ${billId}`);
+            alert(`Verification successful for Booking ID: ${billId}`);
             const button = document.querySelector(`button.verify-btn[data-id="${billId}"]`);
             if (button) {
                 button.textContent = "Verified";
@@ -130,6 +130,7 @@ function verifyPayment(billId) {
             alert("Failed to verify. Please try again.");
         });
 }
+
 
 function showRejectDialog(billId) {
     const modal = document.createElement("div");
@@ -255,3 +256,4 @@ function zoomImage(imageUrl) {
         }
     });
 }
+

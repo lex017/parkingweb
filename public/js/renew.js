@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const tableBody = document.querySelector("#table-body");
 
     // Fetch data from Firestore and update table
-    db.collection("parking_bill").onSnapshot((querySnapshot) => {
+    db.collection("parking_bill").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
     tableBody.innerHTML = ""; // Clear existing table data
 
     querySnapshot.forEach((doc) => {
@@ -268,3 +268,4 @@ function zoomImage(imageUrl) {
         }
     });
 }
+

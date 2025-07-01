@@ -63,3 +63,56 @@ window.onload = function () {
         myWidget.open();
     }, false);
 };
+
+
+// functions/index.js
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+admin.initializeApp();
+
+exports.checkBookingsAndNotify = functions.pubsub.schedule("every 5 minutes").onRun(async (context) => {
+  const now = admin.firestore.Timestamp.now();
+  const snapshot = await admin.firestore().collection("bookings")
+    .where("Status", "==", "pending")
+    .get();
+
+  for (const doc of snapshot.docs) {
+    const data = doc.data();
+    const startTime = data.timestamp;
+    const fcmToken = data.fcmToken; // ต้องเก็บ token ไว้ตอน login หรือสมัคร
+
+    if (!fcmToken) continue;
+
+    const diff = now.toDate() - startTime.toDate(); // ms
+    const minutesPassed = Math.floor(diff / 60000);
+
+    // แจ้งเตือนก่อนหมดเวลา 10 นาที
+    if (minutesPassed >= 50 && data.warned !== true) {
+      await sendNotification(fcmToken, "เหลือเวลา 10 นาที", "ตั๋วจองของคุณใกล้หมดเวลาแล้ว");
+      await doc.ref.update({ warned: true });
+    }
+
+    // หมดเวลา
+    if (minutesPassed >= 60 && data.Status !== "expired") {
+      await sendNotification(fcmToken, "ตั๋วหมดเวลา", "ตั๋วจองของคุณหมดเวลาแล้ว");
+      await doc.ref.update({ Status: "expired" });
+    }
+  }
+});
+
+async function sendNotification(token, title, body) {
+  const payload = {
+    notification: {
+      title,
+      body,
+    },
+    token,
+  };
+
+  try {
+    await admin.messaging().send(payload);
+    console.log("ส่งแจ้งเตือนเรียบร้อย ->", title);
+  } catch (error) {
+    console.error("ส่งแจ้งเตือนล้มเหลว:", error);
+  }
+}

@@ -30,7 +30,7 @@
 
         // Load markers from Firebase Firestore
         function loadMarkers() {
-            db.collection("parking_locations").get().then((querySnapshot) => {
+            db.collection("parking_locations").orderBy("timestamp", "desc").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     if (data.location && data.location.latitude && data.location.longitude) {

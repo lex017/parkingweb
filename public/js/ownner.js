@@ -116,6 +116,97 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("update-form").style.display = "block";
             });
         });
+        // Active menu link highlight
+  const currentPage = window.location.pathname.split("/").pop();
+  const menuLinks = document.querySelectorAll('.side-menu li a');
+  menuLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === currentPage) {
+      link.classList.add('active');
+    }
+  });
+
+  // Listen for new chat messages and show notifications
+  function listenNewMessages() {
+    db.collection('chats')
+      .onSnapshot(snapshot => {
+        snapshot.docChanges().forEach(change => {
+          if (change.type === "added") {
+            const chatId = change.doc.id;
+            const messageRef = db.collection(`chats/${chatId}/messages`)
+              .orderBy("timestamp", "desc")
+              .limit(1);
+            messageRef.get().then(msgSnap => {
+              const latest = msgSnap.docs[0]?.data();
+              if (latest?.senderId !== 'admin') {
+                showNotification(chatId, latest?.text);
+              }
+            });
+          }
+        });
+      });
+  }
+
+  function showNotification(chatId, message) {
+    const notification = document.createElement("div");
+    notification.innerHTML = `
+      <div style="position:fixed; bottom:20px; right:20px; background:#fff; border:1px solid #ccc; padding:10px 20px; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.1); z-index:9999;">
+        <strong>New Message</strong><br/>
+        ${message}
+        <br/><a href="/admin/chat.html?chatId=${chatId}">Open Chat</a>
+      </div>`;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 8000);
+  }
+
+  // Listen to unread reports and update badge
+  function listenNewReports() {
+    db.collection("Reports")
+      .where("isRead", "==", false)
+      .onSnapshot(snapshot => {
+        const count = snapshot.size;
+        const badge = document.getElementById("notification-badge");
+
+        if (count > 0) {
+          badge.style.display = "inline-block";
+          badge.textContent = count;
+        } else {
+          badge.style.display = "none";
+        }
+      });
+  }
+
+  // Click event to mark Reports as read and navigate
+  const reportLink = document.querySelector('a.nav-link');
+  if (reportLink) {
+    reportLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      try {
+        const snapshot = await db.collection("Reports").where("isRead", "==", false).get();
+        const batch = db.batch();
+
+        snapshot.forEach(doc => {
+          const docRef = db.collection("Reports").doc(doc.id);
+          batch.update(docRef, { isRead: true });
+        });
+
+        await batch.commit();
+
+        document.getElementById("notification-badge").style.display = 'none';
+
+        window.location.href = 'report.html';
+
+      } catch (error) {
+        console.error("Error marking reports as read:", error);
+      }
+    });
+  }
+
+  // Initialize listeners on page load
+  listenNewReports();
+  listenNewMessages();
+
     });
 });
 

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/mainpage.css">
     <title>table_user</title>
 </head>
@@ -23,23 +24,23 @@
 				</ul>
 			</li>
 			<li>
-				<a href="#"><i class='bx bxs-inbox icon'></i> Verify <i class='bx bx-chevron-right icon-right'></i></a>
+				<a href="#"><i class="fa-solid fa-square-check icon"></i> Verify <i class='bx bx-chevron-right icon-right'></i></a>
 				<ul class="side-dropdown">
-					<li><a href="ticket_verify.html"><i class='bx bxs-widget icon'></i> Ticket_verify</a></li>
-					<li><a href="parking_verify.html"><i class='bx bxs-widget icon'></i> Parking_verify</a></li>
-					<li><a href="owner_verify.html"><i class='bx bxs-widget icon'></i> Owner_verify</a></li>
+					<li><a href="ticket_verify.html"></i> Ticket_verify</a></li>
+					<li><a href="parking_verify.html"></i> Parking_verify</a></li>
+					<li><a href="owner_verify.html"></i> Owner_verify</a></li>
 				</ul>
 			</li>
 			<li>
-				<a href="#"><i class='bx bxs-inbox icon'></i> update <i class='bx bx-chevron-right icon-right'></i></a>
+				<a href="#"><i class="fa-solid fa-plus icon"></i> update <i class='bx bx-chevron-right icon-right'></i></a>
 				<ul class="side-dropdown">
-					<li><a href="renew_parking.html"><i class='bx bxs-widget icon'></i> Parking_renew</a></li>
-					<li><a href="update_parking.html"><i class='bx bxs-widget icon'></i> Parking_slot</a></li>
+					<li><a href="renew_parking.html"></i> Parking_renew</a></li>
+					<li><a href="update_parking.html"></i> Parking_slot</a></li>
 				</ul>
 			</li>
-			<li><a href="Map_parking.html"><i class='bx bxs-chart icon'></i> Map_parking</a></li>
-			<li><a href="table_user.html"><i class='bx bxs-widget icon'></i> User</a></li>
-			<li><a href="table_Ownner.html"><i class='bx bxs-widget icon'></i> Ownner</a></li>
+			<li><a href="Map_parking.html"></i><i class="fa-solid fa-map-location-dot icon"></i> Map_parking</a></li>
+			<li><a href="table_user.html"></i><i class="fa-solid fa-users-gear icon"></i> User</a></li>
+			<li><a href="table_Ownner.html"></i><i class="fa-solid fa-user-secret icon"></i> Ownner</a></li>
 
 			<li class="divider" data-text="table and forms">Table and forms</li>
 			<li><a href="#"><i class='bx bx-table icon'></i> Tables</a></li>
@@ -56,32 +57,36 @@
 	<!-- SIDEBAR -->
     <!-- NAVBAR -->
     <section id="content">
-        <nav>
-            <i class='bx bx-menu toggle-sidebar' ></i>
-            <form action="#">
-                <div class="form-group">
-                    <input type="text" placeholder="Search...">
-                    <i class='bx bx-search icon' ></i>
-                </div>
-            </form>
-            <a href="#" class="nav-link">
-                <i class='bx bxs-bell icon' ></i>
-                <span class="badge">5</span>
-            </a>
-            <a href="#" class="nav-link">
-                <i class='bx bxs-message-square-dots icon' ></i>
-                <span class="badge">8</span>
-            </a>
-            <span class="divider"></span>
-            <div class="profile">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
-                <ul class="profile-link">
-                    <li><a href="#"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
-                    <li><a href="#"><i class='bx bxs-cog' ></i> Settings</a></li>
-                    <li><a href="login.html"><i class='bx bxs-log-out-circle' ></i> Logout</a></li>
-                </ul>
-            </div>
-        </nav>
+        <!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu toggle-sidebar'></i>
+			<form action="#">
+
+			</form>
+			<a href="report.html" class="nav-link">
+				<i class='bx bxs-bell icon'></i>
+				<span class="badge" id="notification-badge"></span>
+			</a>
+			<div id="popup"
+				style="display:none; position:fixed; top:10px; right:10px; background:#333; color:white; padding:10px; border-radius:8px;">
+				<span id="popup-message"></span>
+			</div>
+			<a href="chat.html" class="nav-link">
+				<i class='bx bxs-message-square-dots icon'></i>
+				<span class="badge">8</span>
+			</a>
+			<span class="divider"></span>
+			<div class="profile">
+				<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+					alt="">
+				<ul class="profile-link">
+					<li><a href="#"><i class='bx bxs-user-circle icon'></i> Profile</a></li>
+					<li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
+					<li><a href="login.html"><i class='bx bxs-log-out-circle'></i> Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+		<!-- NAVBAR -->
 
         <main id="user-data">
             <h1 class="title">Parking_verify Data</h1>

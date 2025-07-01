@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Chat Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+      display: flex;
+      height: 100vh;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .chat-list {
+      width: 250px;
+      background: white;
+      border-radius: 8px;
+      padding: 10px;
+      overflow-y: auto;
+      margin-right: 20px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    .chat-list h3 {
+      margin: 0 0 10px;
+      text-align: center;
+    }
+    .chat-item {
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      border: 1px solid transparent;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .chat-item:hover {
+      background: #e6f0ff;
+      border-color: #91b7ff;
+    }
+    .chat-item.active {
+      background: #cce0ff;
+      border-color: #4a90e2;
+      font-weight: bold;
+    }
+
+    .chat-container {
+      flex: 1;
+      background: white;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    .top-bar {
+      padding: 10px 20px;
+      border-bottom: 1px solid #ddd;
+      background: #f0f0f0;
+    }
+    .top-bar button {
+      background: #4a90e2;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .chat-header {
+      padding: 15px 20px;
+      border-bottom: 1px solid #ddd;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      background: #fafafa;
+    }
+    .message {
+      margin-bottom: 15px;
+      max-width: 60%;
+      padding: 12px 15px;
+      border-radius: 15px;
+      word-wrap: break-word;
+      font-size: 14px;
+      line-height: 1.3;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .user {
+      background-color: #e0f7e9;
+      align-self: flex-start;
+      border-bottom-left-radius: 0;
+    }
+    .admin {
+      background-color: #d0e3ff;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+      text-align: right;
+    }
+    .timestamp {
+      font-size: 10px;
+      color: gray;
+      margin-top: 6px;
+    }
+    img.message-image {
+      max-width: 200px;
+      border-radius: 10px;
+      margin-top: 8px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      padding: 10px 20px;
+      border-top: 1px solid #ddd;
+    }
+    .input-row input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .input-row input[type="file"] {
+      display: none;
+    }
+    .input-row label {
+      background: #4a90e2;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .input-row button {
+      background: #4a90e2;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .input-row button:disabled {
+      background: #a3c1ff;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-list">
+    <h3>All Chats</h3>
+    <div id="chatList"></div>
+  </div>
+  <div class="chat-container">
+    <div class="top-bar">
+      <button onclick="goToMain()">Go to Main</button>
+    </div>
+    <div class="chat-header" id="chatTitle">Select a chat</div>
+    <div id="messages"></div>
+    <div class="input-row">
+      <input type="text" id="messageInput" placeholder="Type a message..." disabled />
+      <label for="imageUpload" title="Send Image">📷</label>
+      <input type="file" id="imageUpload" accept="image/*" disabled />
+      <button id="sendBtn" onclick="sendMessage()" disabled>Send</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-storage-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD9h0g0YOKvq7_6HpD9ftGyH0bXfxXNLIk",
+      authDomain: "parkingapp-47d6d.firebaseapp.com",
+      projectId: "parkingapp-47d6d",
+      storageBucket: "parkingapp-47d6d.appspot.com",
+      messagingSenderId: "77735745622",
+      appId: "1:77735745622:web:37682bcfabdcfd2f47c3f7",
+      measurementId: "G-FH3WFGN2Q5"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    const chatListDiv = document.getElementById('chatList');
+    const messagesDiv = document.getElementById('messages');
+    const chatTitle = document.getElementById('chatTitle');
+    const messageInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const imageUpload = document.getElementById('imageUpload');
+
+    const adminId = 'admin';
+    let currentChatId = null;
+    let unsubscribeMessages = null;
+
+    function loadChatList() {
+      db.collection('chats')
+        .orderBy('lastUpdated', 'desc')
+        .onSnapshot(snapshot => {
+          chatListDiv.innerHTML = '';
+          if (snapshot.empty) {
+            chatListDiv.innerHTML = '<p>No chats found.</p>';
+            return;
+          }
+
+          snapshot.forEach(doc => {
+            const chatId = doc.id;
+            const chatData = doc.data();
+            const lastMsg = chatData.lastMessage || 'No messages yet';
+
+            const div = document.createElement('div');
+            div.className = 'chat-item';
+            div.textContent = `${chatId} - ${lastMsg.slice(0, 30)}`;
+            div.onclick = () => selectChat(chatId);
+
+            if (chatId === currentChatId) div.classList.add('active');
+            chatListDiv.appendChild(div);
+          });
+
+          if (!currentChatId && snapshot.docs.length > 0) {
+            selectChat(snapshot.docs[0].id);
+          }
+        }, error => {
+          console.error('Error loading chats:', error.message);
+          chatListDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+        });
+    }
+
+    function selectChat(chatId) {
+      if (unsubscribeMessages) unsubscribeMessages();
+      currentChatId = chatId;
+      chatTitle.textContent = `Chat: ${chatId}`;
+      messageInput.disabled = false;
+      sendBtn.disabled = false;
+      imageUpload.disabled = false;
+
+      Array.from(chatListDiv.children).forEach(div => {
+        div.classList.toggle('active', div.textContent.startsWith(chatId));
+      });
+
+      messagesDiv.innerHTML = 'Loading messages...';
+      unsubscribeMessages = db.collection('chats')
+        .doc(chatId)
+        .collection('messages')
+        .orderBy('timestamp', 'asc')
+        .onSnapshot(snapshot => {
+          messagesDiv.innerHTML = '';
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            const isAdmin = data.senderId === adminId;
+            const div = document.createElement('div');
+            div.className = `message ${isAdmin ? 'admin' : 'user'}`;
+
+            let content = '';
+            if (data.text) content += `<div>${escapeHtml(data.text)}</div>`;
+            if (data.imageUrl) content += `<img class="message-image" src="${data.imageUrl}" alt="Image">`;
+
+            const time = data.timestamp?.toDate().toLocaleString() || '';
+            div.innerHTML = content + `<div class="timestamp">${time}</div>`;
+            messagesDiv.appendChild(div);
+          });
+          messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }, error => {
+          messagesDiv.innerHTML = `<p>Error loading messages: ${error.message}</p>`;
+          console.error('Error loading messages:', error);
+        });
+    }
+
+    async function sendMessage() {
+      if (!currentChatId) return;
+      const text = messageInput.value.trim();
+      sendBtn.disabled = true;
+
+      let imageUrl = null;
+      if (imageUpload.files.length > 0) {
+        const file = imageUpload.files[0];
+
+        // Upload to Cloudinary
+        const cloudName = "doiq3nkso";
+        const uploadPreset = "parking";
+        const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', uploadPreset);
+
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            body: formData
+          });
+          const data = await response.json();
+
+          if (data.secure_url) {
+            imageUrl = data.secure_url;
+          } else {
+            alert('Cloudinary upload failed.');
+            sendBtn.disabled = false;
+            return;
+          }
+        } catch (error) {
+          alert('Image upload error: ' + error.message);
+          sendBtn.disabled = false;
+          return;
+        }
+      }
+
+      if (!text && !imageUrl) {
+        alert('Enter a message or select an image.');
+        sendBtn.disabled = false;
+        return;
+      }
+
+      try {
+        await db.collection('chats').doc(currentChatId).collection('messages').add({
+          text: text || null,
+          imageUrl: imageUrl || null,
+          senderId: adminId,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        await db.collection('chats').doc(currentChatId).update({
+          lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+          lastMessage: text || '[Image]'
+        });
+
+        messageInput.value = '';
+        imageUpload.value = '';
+      } catch (error) {
+        alert('Send failed: ' + error.message);
+      }
+
+      sendBtn.disabled = false;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function goToMain() {
+      window.location.href = 'mainpage.html'; // Change to your main page URL
+    }
+
+    loadChatList();
+  </script>
+</body>
+</html>
