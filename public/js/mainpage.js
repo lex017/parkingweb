@@ -147,11 +147,34 @@ const db = firebase.firestore();
 
 // Update dashboard counts
 function updateCounts() {
-  db.collection("bookings").get().then(snapshot => {
-    document.getElementById("ticketCount").textContent = snapshot.size;
-    const prog = document.querySelectorAll('.progress')[0];
-    if(prog) prog.style.setProperty('--value', `${Math.min(snapshot.size, 100)}%`);
+  db.collection("parking_bill")
+  .where("status", "==", "success") // Filter by status
+  .get()
+  .then(snapshot => {
+    let total = 0;
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      if (data.totalPrice) {
+        total += parseFloat(data.totalPrice);
+      }
+    });
+
+    // Display total price in element with ID 'ticketCount'
+    document.getElementById("ticketCount").textContent = total.toLocaleString() + " K";
+
+    // Optional: show progress bar value
+    const prog = document.querySelector('.progress');
+    if (prog) {
+      const maxValue = 5000000; // Set your target max value
+      const progressValue = Math.min((total / maxValue) * 100, 100);
+      prog.style.setProperty('--value', `${progressValue}%`);
+    }
+  })
+  .catch(error => {
+    console.error("Error getting documents: ", error);
   });
+
   db.collection("Owner").get().then(snapshot => {
     document.getElementById("ownerCount").textContent = snapshot.size;
     const prog = document.querySelectorAll('.progress')[1];

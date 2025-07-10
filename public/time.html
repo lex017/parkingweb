@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pending Ticket Timer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f0f4f8;
+      color: #333;
+    }
+    .ticket-card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      text-align: center;
+    }
+    .ticket-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+    .pending-time {
+      font-size: 1.25rem;
+      color: #e67e22;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ticket-card">
+    <div class="ticket-title">Ticket #12345</div>
+    <div>Status: <strong>Pending</strong></div>
+    <div id="pendingTimer" class="pending-time">Loading timer...</div>
+  </div>
+
+  <script>
+    // Example: The timestamp when the ticket went pending
+    // You can replace this with your backend timestamp, e.g., from Firestore in ISO format
+    const pendingTimestamp = '2025-07-09T10:30:00Z'; // UTC time string
+
+    function updatePendingTimer() {
+      const now = new Date();
+      const start = new Date(pendingTimestamp);
+      const diffMs = now - start;
+
+      if (diffMs < 0) {
+        // Pending time in the future (unlikely), reset to 0
+        document.getElementById('pendingTimer').textContent = 'Pending just now';
+        return;
+      }
+
+      const diffMinutes = Math.floor(diffMs / 60000);
+
+      const text =
+        diffMinutes === 0
+          ? 'Pending just now'
+          : `Pending for ${diffMinutes} minute${diffMinutes > 1 ? 's' : ''}`;
+
+      document.getElementById('pendingTimer').textContent = text;
+    }
+
+    // Update immediately and then every minute
+    updatePendingTimer();
+    setInterval(updatePendingTimer, 60000);
+  </script>
+
+</body>
+</html>
