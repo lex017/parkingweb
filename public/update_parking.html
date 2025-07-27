@@ -1,126 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lo">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/mainpage.css">
-    <title>table_user</title>
+    <title>ຕາຕະລາງຜູ້ໃຊ້</title>
 </head>
+
 <body>
-    
-  <!-- SIDEBAR -->
-	<section id="sidebar">
-		<a href="mainpage.html" class="brand"><i class='bx bxs-smile icon'></i> Admin_4jord</a>
-		<ul class="side-menu">
-			<li><a href="mainpage.html" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
-			<li class="divider" data-text="main">Main</li>
-			<li>
-				<a href="#"><i class='bx bxs-inbox icon'></i> Parking <i class='bx bx-chevron-right icon-right'></i></a>
-				<ul class="side-dropdown">
-					<li><a href="location.html">Location</a></li>
-					<li><a href="payment.html">Payment</a></li>
-				</ul>
-			</li>
-			<li>
-				<a href="#"><i class="fa-solid fa-square-check icon"></i> Verify <i class='bx bx-chevron-right icon-right'></i></a>
-				<ul class="side-dropdown">
-					<li><a href="ticket_verify.html"></i> Ticket_verify</a></li>
-					<li><a href="parking_verify.html"></i> Parking_verify</a></li>
-					<li><a href="owner_verify.html"></i> Owner_verify</a></li>
-				</ul>
-			</li>
-			<li>
-				<a href="#"><i class="fa-solid fa-plus icon"></i> update <i class='bx bx-chevron-right icon-right'></i></a>
-				<ul class="side-dropdown">
-					<li><a href="renew_parking.html"></i> Parking_renew</a></li>
-					<li><a href="update_parking.html"></i> Parking_slot</a></li>
-				</ul>
-			</li>
-			
-			<li><a href="table_user.html"></i><i class="fa-solid fa-users-gear icon"></i> User</a></li>
-			<li><a href="table_Ownner.html"></i><i class="fa-solid fa-user-secret icon"></i> Ownner</a></li>
-		</ul>
 
-	</section>
-	<!-- SIDEBAR -->
-    <!-- NAVBAR -->
+    <section id="sidebar">
+        <a href="mainpage.html" class="brand"><i class='bx bxs-smile icon'></i> Admin_4jord</a>
+        <ul class="side-menu">
+            <li><a href="mainpage.html" class="active"><i class='bx bxs-dashboard icon'></i> ແຜງໜ້າປັດ</a></li>
+            <li class="divider" data-text="main">ຫຼັກ</li>
+            <li>
+                <a href="#"><i class='bx bxs-inbox icon'></i> ບ່ອນຈອດລົດ <i class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a href="location.html">ສະຖານທີ່</a></li>
+                    <li><a href="payment.html">ການຊໍາລະເງິນ</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-square-check icon"></i> ຢືນຢັນ <i class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a href="ticket_verify.html"></i> ຢືນຢັນປີ້</a></li>
+                    <li><a href="parking_verify.html"></i> ຢືນຢັນບ່ອນຈອດລົດ</a></li>
+                    <li><a href="owner_verify.html"></i> ຢືນຢັນເຈົ້າຂອງ</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-plus icon"></i> ອັບເດດ <i class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a href="renew_parking.html"></i> ຕໍ່ອາຍຸບ່ອນຈອດລົດ</a></li>
+                    <li><a href="update_parking.html"></i> ຊ່ອງຈອດລົດ</a></li>
+                </ul>
+            </li>
+
+            <li><a href="table_user.html"></i><i class="fa-solid fa-users-gear icon"></i> ຜູ້ໃຊ້</a></li>
+            <li><a href="table_Ownner.html"></i><i class="fa-solid fa-user-secret icon"></i> ເຈົ້າຂອງ</a></li>
+        </ul>
+
+    </section>
     <section id="content">
-       <!-- NAVBAR -->
-		<nav>
-			<i class='bx bx-menu toggle-sidebar'></i>
-			<form action="#">
+        <nav>
+            <i class='bx bx-menu toggle-sidebar'></i>
+            <form action="#">
 
-			</form>
-			<a href="report.html" class="nav-link">
-				<i class='bx bxs-bell icon'></i>
-				<span class="badge" id="notification-badge"></span>
-			</a>
-			<div id="popup"
-				style="display:none; position:fixed; top:10px; right:10px; background:#333; color:white; padding:10px; border-radius:8px;">
-				<span id="popup-message"></span>
-			</div>
-			<a href="chat.html" class="nav-link">
-				<i class='bx bxs-message-square-dots icon'></i>
-				<span class="badge">8</span>
-			</a>
-			<span class="divider"></span>
-			<div class="profile">
-				<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-					alt="">
-				<ul class="profile-link">
-					<li><a href="#"><i class='bx bxs-user-circle icon'></i> Profile</a></li>
-					<li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
-					<li><a href="login.html"><i class='bx bxs-log-out-circle'></i> Logout</a></li>
-				</ul>
-			</div>
-		</nav>
-		<!-- NAVBAR -->
-
+            </form>
+            <a href="report.html" class="nav-link">
+                <i class='bx bxs-bell icon'></i>
+                <span class="badge" id="notification-badge"></span>
+            </a>
+            <div id="popup"
+                style="display:none; position:fixed; top:10px; right:10px; background:#333; color:white; padding:10px; border-radius:8px;">
+                <span id="popup-message"></span>
+            </div>
+            <a href="chat.html" class="nav-link">
+                <i class='bx bxs-message-square-dots icon'></i>
+                <span class="badge">8</span>
+            </a>
+            <span class="divider"></span>
+            <div class="profile">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    alt="">
+                <ul class="profile-link">
+                    <li><a href="#"><i class='bx bxs-user-circle icon'></i> ໂປຣໄຟລ໌</a></li>
+                    <li><a href="#"><i class='bx bxs-cog'></i> ການຕັ້ງຄ່າ</a></li>
+                    <li><a href="login.html"><i class='bx bxs-log-out-circle'></i> ອອກຈາກລະບົບ</a></li>
+                </ul>
+            </div>
+        </nav>
         <main id="user-data">
-            <h1 class="title">update_parking Data</h1>
+            <h1 class="title">ຂໍ້ມູນການອັບເດດບ່ອນຈອດລົດ</h1>
             <ul class="breadcrumbs">
-                <li><a href="#">Home</a></li>
+                <li><a href="#">ໜ້າຫຼັກ</a></li>
                 <li class="divider">/</li>
-                <li><a href="#" class="active">update_parking</a></li>
+                <li><a href="#" class="active">ອັບເດດບ່ອນຈອດລົດ</a></li>
             </ul>
             <div class="tablecontainer" id="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Name</th>  
-                            <th>Totalprice</th>
-                            <th>Car_slot</th>
-                            <th>status</th>
-                            <th>pagekage</th>
-                            <th>tag</th>
-                            <th>Time</th>
-                            <th>Actions</th>
+                            <th>ຊື່</th>
+                            <th>ລາຄາລວມ</th>
+                            <th>ຊ່ອງຈອດລົດ</th>
+                            <th>ສະຖານະ</th>
+                            <th>ແພັກເກັດ</th>
+                            <th>ແທັກ</th>
+                            <th>ເວລາ</th>
+                            <th>ການກະທຳ</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        <!-- User data from Firestore will be inserted here -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
-        
-            <!-- Modal for the zoomed image -->
+
             <div id="zoomModal" class="zoom-modal">
                 <span class="close" id="closeZoomModal">&times;</span>
                 <img class="modal-content" id="zoomedImage">
                 <div id="caption"></div>
             </div>
         </main>
-        
+
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/mainpage.js"></script>
-    
-    <!-- Firebase -->
+
     <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="js/update_slot.js"></script>
 </body>
+
 </html>

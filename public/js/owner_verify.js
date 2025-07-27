@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td>${userData.idcard || "N/A"}</td>
                 <td>${userData.status || "N/A"}</td>
                 <td>${userData.verify || "N/A"}</td>
-                <td>${formattedTimestamp}</td>
+                
                 <td>
                     <button class="verify-btn" data-id="${newOwnerId}" ${userData.verify === "success" ? "disabled" : ""}>
                         ${userData.verify === "success" ? "Verified" : "Verify"}

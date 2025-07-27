@@ -1,128 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lo">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="css/mainpage.css">
-  <title>table_user</title>
-  <style>
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/mainpage.css">
+    <title>ຕາຕະລາງຜູ້ໃຊ້</title>
+    <style>
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
 
-    .modal-content {
-      background: #fff;
-      padding: 20px 30px;
-      border-radius: 10px;
-      width: 400px;
-      max-width: 90%;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    }
+        .modal-content {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
 
-    .modal-content h3 {
-      margin-top: 0;
-    }
+        .modal-content h3 {
+            margin-top: 0;
+        }
 
-    .modal-content input {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-      font-size: 14px;
-    }
+        .modal-content input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 14px;
+        }
 
-    .modal-content button {
-      margin-top: 10px;
-      margin-right: 10px;
-      padding: 8px 16px;
-      cursor: pointer;
-    }
-  </style>
+        .modal-content button {
+            margin-top: 10px;
+            margin-right: 10px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
 <!-- SIDEBAR -->
 <section id="sidebar">
-  <a href="mainpage.html" class="brand"><i class='bx bxs-smile icon'></i> Admin_4jord</a>
-  <ul class="side-menu">
-    <li><a href="mainpage.html" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
-    <li class="divider" data-text="main">Main</li>
-    <li>
-      <a href="#"><i class='bx bxs-inbox icon'></i> Parking <i class='bx bx-chevron-right icon-right'></i></a>
-      <ul class="side-dropdown">
-        <li><a href="location.html">Location</a></li>
-        <li><a href="payment.html">Payment</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#"><i class="fa-solid fa-square-check icon"></i> Verify <i class='bx bx-chevron-right icon-right'></i></a>
-      <ul class="side-dropdown">
-        <li><a href="ticket_verify.html">Ticket_verify</a></li>
-        <li><a href="parking_verify.html">Parking_verify</a></li>
-        <li><a href="owner_verify.html">Owner_verify</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#"><i class="fa-solid fa-plus icon"></i> update <i class='bx bx-chevron-right icon-right'></i></a>
-      <ul class="side-dropdown">
-        <li><a href="renew_parking.html">Parking_renew</a></li>
-        <li><a href="update_parking.html">Parking_slot</a></li>
-      </ul>
-    </li>
-    <li><a href="table_user.html"><i class="fa-solid fa-users-gear icon"></i> User</a></li>
-    <li><a href="table_Ownner.html"><i class="fa-solid fa-user-secret icon"></i> Ownner</a></li>
-  </ul>
+    <a href="mainpage.html" class="brand"><i class='bx bxs-smile icon'></i> Admin_4jord</a>
+    <ul class="side-menu">
+        <li><a href="mainpage.html" class="active"><i class='bx bxs-dashboard icon'></i> ແຜງໜ້າປັດ</a></li>
+        <li class="divider" data-text="main">ຫຼັກ</li>
+        <li>
+            <a href="#"><i class='bx bxs-inbox icon'></i> ບ່ອນຈອດລົດ <i class='bx bx-chevron-right icon-right'></i></a>
+            <ul class="side-dropdown">
+                <li><a href="location.html">ສະຖານທີ່</a></li>
+                <li><a href="payment.html">ການຊໍາລະເງິນ</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#"><i class="fa-solid fa-square-check icon"></i> ຢືນຢັນ <i class='bx bx-chevron-right icon-right'></i></a>
+            <ul class="side-dropdown">
+                <li><a href="ticket_verify.html">ຢືນຢັນປີ້</a></li>
+                <li><a href="parking_verify.html">ຢືນຢັນບ່ອນຈອດລົດ</a></li>
+                <li><a href="owner_verify.html">ຢືນຢັນເຈົ້າຂອງ</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#"><i class="fa-solid fa-plus icon"></i> ອັບເດດ <i class='bx bx-chevron-right icon-right'></i></a>
+            <ul class="side-dropdown">
+                <li><a href="renew_parking.html">ຕໍ່ອາຍຸບ່ອນຈອດລົດ</a></li>
+                <li><a href="update_parking.html">ຊ່ອງຈອດລົດ</a></li>
+            </ul>
+        </li>
+        <li><a href="table_user.html"><i class="fa-solid fa-users-gear icon"></i> ຜູ້ໃຊ້</a></li>
+        <li><a href="table_Ownner.html"><i class="fa-solid fa-user-secret icon"></i> ເຈົ້າຂອງ</a></li>
+    </ul>
 </section>
 
+<section id="content">
+    <!-- NAVBAR -->
+    <nav>
+        <i class='bx bx-menu toggle-sidebar'></i>
+        <form action="#">
 
+        </form>
+        <a href="report.html" class="nav-link">
+            <i class='bx bxs-bell icon'></i>
+            <span class="badge" id="notification-badge"></span>
+        </a>
+        <div id="popup"
+            style="display:none; position:fixed; top:10px; right:10px; background:#333; color:white; padding:10px; border-radius:8px;">
+            <span id="popup-message"></span>
+        </div>
+        <a href="chat.html" class="nav-link">
+            <i class='bx bxs-message-square-dots icon'></i>
+            <span class="badge">8</span>
+        </a>
+        <span class="divider"></span>
+        <div class="profile">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                alt="">
+            <ul class="profile-link">
+                <li><a href="#"><i class='bx bxs-user-circle icon'></i> ໂປຣໄຟລ໌</a></li>
+                <li><a href="#"><i class='bx bxs-cog'></i> ການຕັ້ງຄ່າ</a></li>
+                <li><a href="login.html"><i class='bx bxs-log-out-circle'></i> ອອກຈາກລະບົບ</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- NAVBAR -->
 
-  <main id="user-data">
-    <h1 class="title">User Data</h1>
-    <ul class="breadcrumbs">
-      <li><a href="#">Home</a></li>
-      <li class="divider">/</li>
-      <li><a href="#" class="active">User</a></li>
-    </ul>
-    <div class="tablecontainer" id="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="table-body"></tbody>
-      </table>
-    </div>
-  </main>
+    <main id="user-data">
+        <h1 class="title">ຂໍ້ມູນຜູ້ໃຊ້</h1>
+        <ul class="breadcrumbs">
+            <li><a href="#">ໜ້າຫຼັກ</a></li>
+            <li class="divider">/</li>
+            <li><a href="#" class="active">ຜູ້ໃຊ້</a></li>
+        </ul>
+        <div class="tablecontainer" id="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ຊື່ຜູ້ໃຊ້</th>
+                        <th>ອີເມວ</th>
+                        <th>ລະຫັດຜ່ານ</th>
+                        <th>ການກະທຳ</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+    </main>
 </section>
 
 <!-- UPDATE MODAL -->
 <div class="modal-overlay" id="updateModal">
-  <div class="modal-content">
-    <h3>Update User</h3>
-    <input type="text" id="modal-username" placeholder="New username">
-    <input type="email" id="modal-email" placeholder="New email">
-    <input type="text" id="modal-password" placeholder="New password">
-    <button id="modal-submit">Submit</button>
-    <button id="modal-cancel">Cancel</button>
-  </div>
+    <div class="modal-content">
+        <h3>ອັບເດດຜູ້ໃຊ້</h3>
+        <input type="text" id="modal-username" placeholder="ຊື່ຜູ້ໃຊ້ໃໝ່">
+        <input type="email" id="modal-email" placeholder="ອີເມວໃໝ່">
+        <input type="text" id="modal-password" placeholder="ລະຫັດຜ່ານໃໝ່">
+        <button id="modal-submit">ສົ່ງ</button>
+        <button id="modal-cancel">ຍົກເລີກ</button>
+    </div>
 </div>
 
 <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="/public/js/user.js">
-  
-</script>
+<script src="/public/js/user.js"></script>
 </body>
 </html>

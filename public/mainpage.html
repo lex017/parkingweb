@@ -1,205 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="lo">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ໜ້າຂໍ້ມູນລະບົບ</title>
 
-	<link rel="stylesheet" href="css/mainpage.css">
-	<title>Admin_4jord</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <link rel="stylesheet" href="css/mainpage.css">
 </head>
-
 <body>
 
-	<!-- SIDEBAR -->
-	<section id="sidebar">
-		<a href="mainpage.html" class="brand"><i class='bx bxs-smile icon'></i> Admin_4jord</a>
-		<ul class="side-menu">
-			<li><a href="mainpage.html" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
-			<li class="divider" data-text="main">Main</li>
-			<li>
-				<a href="#"><i class='bx bxs-inbox icon'></i> Parking <i class='bx bx-chevron-right icon-right'></i></a>
-				<ul class="side-dropdown">
-					<li><a href="location.html">Location</a></li>
-					<li><a href="payment.html">Payment</a></li>
-				</ul>
-			</li>
-			<li>
-				<a href="#"><i class="fa-solid fa-square-check icon"></i> Verify <i class='bx bx-chevron-right icon-right'></i></a>
-				<ul class="side-dropdown">
-					<li><a href="ticket_verify.html"></i> Ticket_verify</a></li>
-					<li><a href="parking_verify.html"></i> Parking_verify</a></li>
-					<li><a href="owner_verify.html"></i> Owner_verify</a></li>
-				</ul>
-			</li>
-			<li>
-				<a href="#"><i class="fa-solid fa-plus icon"></i> update <i class='bx bx-chevron-right icon-right'></i></a>
-				<ul class="side-dropdown">
-					<li><a href="renew_parking.html"></i> Parking_renew</a></li>
-					<li><a href="update_parking.html"></i> Parking_slot</a></li>
-				</ul>
-			</li>
-			
-			<li><a href="table_user.html"></i><i class="fa-solid fa-users-gear icon"></i> User</a></li>
-			<li><a href="table_Ownner.html"></i><i class="fa-solid fa-user-secret icon"></i> Ownner</a></li>
-		</ul>
+    <section id="sidebar">
+        <a href="mainpage.html" class="brand"><i class='bx bxs-smile icon'></i> Admin_4jord</a>
+        <ul class="side-menu">
+            <li><a href="mainpage.html" class="active"><i class='bx bxs-dashboard icon'></i> ແຜງໜ້າປັດ</a></li>
+            <li class="divider" data-text="main">ຫຼັກ</li>
+            <li>
+                <a href="#"><i class='bx bxs-inbox icon'></i> ບ່ອນຈອດລົດ <i class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a href="location.html">ສະຖານທີ່</a></li>
+                    <li><a href="payment.html">ການຊໍາລະເງິນ</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-square-check icon"></i> ຢືນຢັນ <i class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a href="ticket_verify.html"><i class="fa-solid fa-ticket-alt"></i> ຢືນຢັນປີ້</a></li>
+                    <li><a href="parking_verify.html"><i class="fa-solid fa-parking"></i> ຢືນຢັນບ່ອນຈອດລົດ</a></li>
+                    <li><a href="owner_verify.html"><i class="fa-solid fa-user-tie"></i> ຢືນຢັນເຈົ້າຂອງ</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-plus icon"></i> ອັບເດດ <i class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a href="renew_parking.html"><i class="fa-solid fa-sync-alt"></i> ຕໍ່ອາຍຸບ່ອນຈອດລົດ</a></li>
+                    <li><a href="update_parking.html"><i class="fa-solid fa-car-space"></i> ຊ່ອງຈອດລົດ</a></li>
+                </ul>
+            </li>
 
-	</section>
-	<!-- SIDEBAR -->
-	<!-- NAVBAR -->
-	<section id="content">
-		<!-- NAVBAR -->
-		<nav>
-			<i class='bx bx-menu toggle-sidebar'></i>
-			<form action="#">
+            <li><a href="table_user.html"><i class="fa-solid fa-users-gear icon"></i> ຜູ້ໃຊ້</a></li>
+            <li><a href="table_Ownner.html"><i class="fa-solid fa-user-secret icon"></i> ເຈົ້າຂອງ</a></li>
+        </ul>
 
-			</form>
-			<a href="report.html" class="nav-link">
-				<i class='bx bxs-bell icon'></i>
-				<span class="badge" id="notification-badge"></span>
-			</a>
-			<div id="popup"
-				style="display:none; position:fixed; top:10px; right:10px; background:#333; color:white; padding:10px; border-radius:8px;">
-				<span id="popup-message"></span>
-			</div>
-			<a href="chat.html" class="nav-link">
-				<i class='bx bxs-message-square-dots icon'></i>
-				<span class="badge">8</span>
-			</a>
-			<span class="divider"></span>
-			<div class="profile">
-				<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-					alt="">
-				<ul class="profile-link">
-					<li><a href="#"><i class='bx bxs-user-circle icon'></i> Profile</a></li>
-					<li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
-					<li><a href="login.html"><i class='bx bxs-log-out-circle'></i> Logout</a></li>
-				</ul>
-			</div>
-		</nav>
-		<!-- NAVBAR -->
+    </section>
+    <section id="content">
+        <nav>
+            <i class='bx bx-menu toggle-sidebar'></i>
+            <form action="#">
 
-		<!-- MAIN -->
-		<main>
-			<h1 class="title">Dashboard</h1>
-			<ul class="breadcrumbs">
-				<li><a href="#">Home</a></li>
-				<li class="divider">/</li>
-				<li><a href="mainpage.html" class="active">Dashboard</a></li>
-			</ul>
-			<div class="info-data">
-				<div class="card">
-					<div class="head">
-						<div>
-							<h2 id="ticketCount">0</h2>
-							<p>Total price from parking</p>
-						</div>
-						<i class='bx bx-trending-up icon'></i>
-					</div>
+            </form>
+            <a href="report.html" class="nav-link">
+                <i class='bx bxs-bell icon'></i>
+                <span class="badge" id="notification-badge"></span>
+            </a>
+            <div id="popup"
+                style="display:none; position:fixed; top:10px; right:10px; background:#333; color:white; padding:10px; border-radius:8px;">
+                <span id="popup-message"></span>
+            </div>
+            <a href="chat.html" class="nav-link">
+                <i class='bx bxs-message-square-dots icon'></i>
+                <span class="badge">8</span>
+            </a>
+            <span class="divider"></span>
+            <div class="profile">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGເພີ່ມ icon ໃຫ້ເຂົ້າກັບເນື້ອໃນລາວ
+op_example/eufDBMHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    alt="">
+                <ul class="profile-link">
+                    <li><a href="#"><i class='bx bxs-user-circle icon'></i> ໂປຣໄຟລ໌</a></li>
+                    <li><a href="#"><i class='bx bxs-cog'></i> ການຕັ້ງຄ່າ</a></li>
+                    <li><a href="login.html"><i class='bx bxs-log-out-circle'></i> ອອກຈາກລະບົບ</a></li>
+                </ul>
+            </div>
+        </nav>
+        <main>
+            <h1 class="title">ແຜງໜ້າປັດ</h1>
+            <ul class="breadcrumbs">
+                <li><a href="#">ໜ້າຫຼັກ</a></li>
+                <li class="divider">/</li>
+                <li><a href="#" class="active">ແຜງໜ້າປັດ</a></li>
+            </ul>
 
-				</div>
-				<div class="card">
-					<div class="head">
-						<div>
-							<h2 id="ownerCount">0</h2>
-							<p>Ownner</p>
-						</div>
-						<i class='bx bx-trending-down icon down'></i>
-					</div>
+            <div class="info-data">
+                <div class="card">
+                    <div class="head">
+                        <div>
+                            <h2><span id="ticketCount">0</span></h2>
+                            <p>ລາຍຮັບລວມ</p>
+                        </div>
+                        <i class='bx bx-trending-up icon'></i>
+                    </div>
+                    
+                </div>
+                <div class="card">
+                    <div class="head">
+                        <div>
+                            <h2><span id="ownerCount">0</span></h2>
+                            <p>ເຈົ້າຂອງ</p>
+                        </div>
+                        <i class='bx bx-user-plus icon'></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="head">
+                        <div>
+                            <h2><span id="userCount">0</span></h2>
+                            <p>ຜູ້ໃຊ້</p>
+                        </div>
+                        <i class='bx bxs-group icon'></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="head">
+                        <div>
+                            <h2><span id="parkingCount">0</span></h2>
+                            <p>ສະຖານທີ່ຈອດລົດ</p>
+                        </div>
+                        <i class='bx bxs-car-parking icon'></i>
+                    </div>
+                </div>
+            </div>
 
-				</div>
-				<div class="card">
-					<div class="head">
-						<div>
-							<h2 id="userCount">0</h2>
-							<p>User</p>
-						</div>
-						<i class='bx bx-trending-up icon'></i>
-					</div>
+            <div class="data">
+                <div class="content-data">
+                    <div class="head">
+                        <h3>ລາຍຮັບປະຈຳວັນ</h3>
+                        <div class="filter-controls">
+                            <label for="parkingFromDate">ຈາກວັນທີ:</label>
+                            <input type="date" id="parkingFromDate">
 
-				</div>
-				<div class="card">
-					<div class="head">
-						<div>
-							<h2 id="parkingCount">0</h2>
-							<p>parking</p>
-						</div>
-						<i class='bx bx-trending-up icon'></i>
-					</div>
-					<!-- <span class="progress" data-value="80%"></span>
-					<span class="label">80%</span> -->
-				</div>
-			</div>
-			<!-- <div class="data">
-				<div class="content-data">
-					<div class="head">
-						<h3>Report</h3>
-						<div class="menu">
-							<i class='bx bx-dots-horizontal-rounded icon'></i>
-							<ul class="menu-link">
-								<li><a href="#">Edit</a></li>
-								<li><a href="#">Save</a></li>
-								<li><a href="#">Remove</a></li>
-							</ul>
-						</div>
-					</div>
-					<div>
-						<label for="dayFilter">Select Day:</label>
-						<select id="dayFilter">
-							<option value="">All Days</option>
-						</select>
-					</div>
-					<div id="chart-bar"></div>
+                            <label for="parkingToDate">ເຖິງວັນທີ:</label>
+                            <input type="date" id="parkingToDate">
 
+                            <button id="filterDashboardDataBtn">ນຳໃຊ້ຕົວກອງ</button>
+                        </div>
+                    </div>
+                    <div class="chart">
+                        <div id="chart-bar"></div>
+                    </div>
+                </div>
 
-				</div> -->
-				<div class="content-data">
-					<div class="head">
-						<h3>Parking</h3>
-						<div class="menu">
-							<i class='bx bx-dots-horizontal-rounded icon'></i>
-							<ul class="menu-link">
-								<li><a href="#">Edit</a></li>
-								<li><a href="#">Save</a></li>
-								<li><a href="#">Remove</a></li>
-							</ul>
-						</div>
+            </div>
+        </main>
+    </section>
+    <script src="js/mainpage.js"></script>
 
-					</div>
-
-					<!-- Table for Parking Data -->
-					<div class="tablecontainer">
-						<table id="parkingTable">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Package</th>
-									<th>isActive</th>
-									<th>Car Slot</th>
-									<th>Time</th>
-
-								</tr>
-							</thead>
-							<tbody>
-								<!-- Data will be injected here -->
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-
-		</main>
-		<!-- MAIN -->
-	</section>
-	<!-- NAVBAR -->
-	<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
-
-	<script src="js/mainpage.js"></script>
 </body>
-
 </html>
