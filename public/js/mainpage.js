@@ -450,7 +450,7 @@ function listenNewMessages() {
                     messageRef.get().then(msgSnap => {
                         const latest = msgSnap.docs[0]?.data();
                         if (latest?.senderId !== 'admin') {
-                            showNotification(chatId, latest?.text);
+                            // showNotification(chatId, latest?.text); // This function was commented out in your original code
                         }
                     }).catch(error => console.error("Error fetching latest message:", error));
                 }
@@ -458,17 +458,100 @@ function listenNewMessages() {
         }, error => console.error("Error listening to chats:", error));
 }
 
-// function showNotification(chatId, message) {
-//     const notification = document.createElement("div");
-//     notification.innerHTML = `
-//         <div style="position:fixed; bottom:20px; right:20px; background:#fff; border:1px solid #ccc; padding:10px 20px; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.1); z-index:9999;">
-//             <strong>New Message</strong><br/>
-//             ${message}
-//             <br/><a href="/admin/chat.html?chatId=${chatId}">Open Chat</a>
-//         </div>`;
-//     document.body.appendChild(notification);
-//     setTimeout(() => notification.remove(), 8000);
-// }
+// Attach event listener to the export button
+document.getElementById('exportCSVBtn').addEventListener('click', exportParkingBillToCSV);
+
+// MODIFIED: exportParkingBillToCSV function to use date filters
+async function exportParkingBillToCSV() {
+    try {
+        const fromDateInput = document.getElementById('parkingFromDate');
+        const toDateInput = document.getElementById('parkingToDate');
+
+        let query = db.collection("parking_bill");
+
+        // Apply date filters if they exist in the input fields
+        if (fromDateInput && fromDateInput.value) {
+            const startOfDay = new Date(fromDateInput.value);
+            startOfDay.setHours(0, 0, 0, 0); // Set to the very beginning of the selected 'from' day
+            query = query.where("timestamp", ">=", firebase.firestore.Timestamp.fromDate(startOfDay));
+            console.log("CSV Export: Applying fromDate filter:", startOfDay.toISOString());
+        }
+        if (toDateInput && toDateInput.value) {
+            const endOfDay = new Date(toDateInput.value);
+            endOfDay.setHours(23, 59, 59, 999); // Set to the very end of the selected 'to' day
+            query = query.where("timestamp", "<=", firebase.firestore.Timestamp.fromDate(endOfDay));
+            console.log("CSV Export: Applying toDate filter:", endOfDay.toISOString());
+        }
+
+        // Keep the status filter if you only want 'success' bills in the export, matching your dashboard counts
+        query = query.where("status", "==", "success");
+
+        const snapshot = await query.get();
+
+        if (snapshot.empty) {
+            alert("ไม่พบข้อมูลบิลค่าจอดรถสำหรับช่วงวันที่และสถานะที่เลือก");
+            return;
+        }
+
+        const rows = [];
+
+        // Header row
+        rows.push([
+            "ID",
+            "owner ID",
+            "Parking Name",
+            "Total Price",
+            "Status",
+            "Timestamp"
+        ]);
+
+        // Loop through Firestore documents
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const timestamp = data.timestamp?.seconds
+                ? new Date(data.timestamp.seconds * 1000).toLocaleString()
+                : "";
+
+            rows.push([
+                doc.id,
+                data.ownerId || "-", // โปรดตรวจสอบชื่อฟิลด์จริงใน Firestore ของคุณ
+                data.namearking || "-",
+                data.totalPrice || "0",
+                data.status || "-",
+                timestamp
+            ]);
+        });
+
+        // Convert array to CSV string
+        const csvContent = rows.map(e => e.join(",")).join("\n");
+
+        // Create a dynamic filename based on the filtered dates
+        let filename = "parking_bill_data.csv";
+        if (fromDateInput.value && toDateInput.value) {
+            filename = `parking_bill_${fromDateInput.value}_to_${toDateInput.value}.csv`;
+        } else if (fromDateInput.value) {
+            filename = `parking_bill_from_${fromDateInput.value}.csv`;
+        } else if (toDateInput.value) {
+            filename = `parking_bill_to_${toDateInput.value}.csv`;
+        }
+
+        // Create downloadable blob
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+
+        // Create temporary download link and click it
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url); // Clean up the URL object
+    } catch (error) {
+        console.error("เกิดข้อผิดพลาดในการส่งออก CSV:", error);
+        alert("ส่งออก CSV ล้มเหลว กรุณาตรวจสอบ Console สำหรับรายละเอียด");
+    }
+}
 
 // Listen to unread reports and update notification badge
 function listenNewReports() {
@@ -547,9 +630,11 @@ function filterDashboardData() {
 // On page load, initialize everything
 window.addEventListener("DOMContentLoaded", () => {
     updateCounts();
-    // Initially load tables and charts without date filter (or with default month)
-    loadParkingTable();
-    loadAndRenderChart(); // Load current month's chart by default
+    // Initially load tables and charts based on any pre-existing date inputs or defaults.
+    // Calling filterDashboardData() here ensures any dates already set in the input fields
+    // (e.g., if the browser remembers them, or they're set by default in HTML) are applied.
+    filterDashboardData(); // This will call loadParkingTable and loadAndRenderChart with current date inputs.
+
     listenNewReports();
     listenNewMessages();
 
